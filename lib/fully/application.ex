@@ -9,9 +9,7 @@ defmodule Fully.Application do
   def start(_type, _args) do
     children =
       [
-        # Children for all targets
-        # Starts a worker by calling: Fully.Worker.start_link(arg)
-        # {Fully.Worker, arg},
+        Fully.StartClustering
       ] ++ target_children()
 
     # See https://hexdocs.pm/elixir/Supervisor.html

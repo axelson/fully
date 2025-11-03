@@ -88,6 +88,8 @@ config :mdns_lite,
     }
   ]
 
+config :fully, nodes: [:"murphy@192.168.1.6"]
+
 # Import target specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 # Uncomment to use target specific configurations

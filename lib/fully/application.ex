@@ -9,7 +9,8 @@ defmodule Fully.Application do
   def start(_type, _args) do
     children =
       [
-        Fully.StartClustering
+        Fully.StartClustering,
+        Fully.Server
       ] ++ target_children()
 
     # See https://hexdocs.pm/elixir/Supervisor.html

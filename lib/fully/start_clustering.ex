@@ -16,6 +16,7 @@ defmodule Fully.StartClustering do
   def handle_continue(:start_epmd, state) do
     {"", 0} = System.cmd("epmd", ["-daemon"])
     _ = Node.start(:"fully@192.168.1.20")
+    Node.set_cookie(:fw_cookie)
 
     {:noreply, state}
   end
@@ -35,7 +36,7 @@ defmodule Fully.StartClustering do
   end
 
   defp connect_remote_nodes do
-    Application.fetch_env!(:fw, :nodes)
+    Application.get_env(:fully, :nodes, [])
     |> Enum.each(fn node ->
       Logger.info("Trying to connect to #{node}")
 

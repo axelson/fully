@@ -1,4 +1,5 @@
 defmodule Fully do
+  @me __MODULE__
   @controller_address 0xF1
   @desk_address 0xF2
   @eom 0x7E
@@ -77,16 +78,16 @@ defmodule Fully do
 
   def command_name_to_integer, do: @command_name_to_integer
 
-  def connect_uart do
+  def connect_uart(opts \\ []) do
     verify_uart_enumeration()
 
-    {:ok, pid} = Circuits.UART.start_link()
+    {:ok, pid} = Circuits.UART.start_link(opts)
     Circuits.UART.open(pid, "ttyAMA0", speed: 9600, active: false)
 
     pid
   end
 
-  def read(pid) do
+  def read(pid \\ @me) do
     case raw_read(pid) do
       {:ok, ""} -> :nothing_to_read
       {:ok, bytes} -> inspect_message(bytes)
@@ -94,21 +95,21 @@ defmodule Fully do
     end
   end
 
-  def raw_read(pid, timeout \\ 10_000) do
+  def raw_read(pid \\ @me, timeout \\ 10_000) do
     Circuits.UART.read(pid, timeout)
   end
 
-  def raise(pid) do
+  def raise(pid \\ @me) do
     message = Command.build_command(:raise, "")
     send_command(pid, message)
   end
 
-  def lower(pid) do
+  def lower(pid \\ @me) do
     message = Command.build_command(:lower, "")
     send_command(pid, message)
   end
 
-  def move_to_position(pid, position) when position in [:pos1, :pos2, :pos3, :pos4] do
+  def move_to_position(pid \\ @me, position) when position in [:pos1, :pos2, :pos3, :pos4] do
     command_name =
       case position do
         :pos1 -> :move_1
@@ -121,7 +122,7 @@ defmodule Fully do
     send_command(pid, message)
   end
 
-  def send_command(pid, message) when is_binary(message) do
+  def send_command(pid \\ @me, message) when is_binary(message) do
     Circuits.UART.write(pid, message)
   end
 

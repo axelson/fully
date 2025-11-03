@@ -49,6 +49,9 @@ defmodule Fully.MixProject do
       {:ring_logger, "~> 0.11.0"},
       {:toolshed, "~> 0.4.0"},
       {:circuits_gpio, "~> 2.1"},
+      {:circuits_uart, "~> 1.5"},
+      {:typed_struct, "~> 0.3.0"},
+      {:dialyxir, "~> 1.4", runtime: false, only: [:dev, :test]},
 
       # Allow Nerves.Runtime on host to support development, testing and CI.
       # See config/host.exs for usage.

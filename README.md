@@ -1,33 +1,23 @@
 # Fully
 
-**TODO: Add description**
+Elixir Nerves app that interfaces with my [Jarvis stand-up desk from fully.com](https://www.fully.com/standing-desks/jarvis.html).
 
-## Targets
+Credit for reverse-engineering goes to Phil Hord, who has extensive notes up at
+https://github.com/phord/Jarvis
 
-Nerves applications produce images for hardware targets based on the
-`MIX_TARGET` environment variable. If `MIX_TARGET` is unset, `mix` builds an
-image that runs on the host (e.g., your laptop). This is useful for executing
-logic tests, running utilities, and debugging. Other targets are represented by
-a short name like `rpi3` that maps to a Nerves system image for that platform.
-All of this logic is in the generated `mix.exs` and may be customized. For more
-information about targets see:
+This is one part of my automated office that is orchestrated by my Scenic Side Screen:
+https://github.com/axelson/scenic-side-screen
 
-https://hexdocs.pm/nerves/supported-targets.html
+Implementation status:
+- This currently implements the minimum that is needed for my own use case, which right now is
+  primarily raising and lowering to my memory presets
+- In particular it's not easy to use commands that pass params (they have to be passed as raw binary)
+- I also only implemented the ability to read the HEIGHT response
 
-## Getting Started
+# Usage
 
 To start your Nerves app:
-  * `export MIX_TARGET=my_target` or prefix every command with
-    `MIX_TARGET=my_target`. For example, `MIX_TARGET=rpi3`
-  * Install dependencies with `mix deps.get`
-  * Create firmware with `mix firmware`
-  * Burn to an SD card with `mix burn`
-
-## Learn more
-
-  * Official docs: https://hexdocs.pm/nerves/getting-started.html
-  * Official website: https://nerves-project.org/
-  * Forum: https://elixirforum.com/c/nerves-forum
-  * Elixir Slack #nerves channel: https://elixir-slack.community/
-  * Elixir Discord #nerves channel: https://discord.gg/elixir
-  * Source: https://github.com/nerves-project/nerves
+- `export MIX_TARGET=rpi0_2`
+- `mix deps.get`
+- `mix firmware`
+- `mix burn` or `mix upload nerves.local`
